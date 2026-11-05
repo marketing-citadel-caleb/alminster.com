@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Refresh data/videos.json (latest YouTube uploads) and data/news.json (headlines).
 
-Runs every hour in GitHub Actions. Standard library only. When a source is
-down, the last good data is kept, so an outage never blanks the site.
+Runs every 15 minutes in GitHub Actions. Standard library only. When a
+source is down, the last good data is kept, so an outage never blanks the site.
 
 Videos come from the channel's public RSS feed. If the repository has a
 YOUTUBE_API_KEY secret, the YouTube Data API is used as a backup source.
@@ -189,12 +189,32 @@ def items_from_feed(feed: dict, cutoff: datetime, hidden: set[str]) -> list[dict
     return items
 
 
+def last_published_news() -> dict:
+    """Headlines from the last good run: the local file, else the copy on the live site.
+
+    news.json is not committed, so on GitHub's servers the live site is the
+    only record of what was showing before this run.
+    """
+    local = read_json(DATA / "news.json", None)
+    if local:
+        return local
+    site_url = str(read_json(DATA / "site.json", {}).get("url", "")).rstrip("/")
+    if not site_url.startswith("https://"):
+        return {}
+    try:
+        return json.loads(fetch(f"{site_url}/news.json", attempts=1))
+    except Exception:  # first run, or the site is unreachable: start fresh
+        return {}
+
+
 def refresh_news() -> None:
     config = read_json(DATA / "feeds.json", {})
     per_section = int(config.get("itemsPerSection", 5))
+    now = iso(datetime.now(timezone.utc))
     cutoff = datetime.now(timezone.utc) - timedelta(days=int(config.get("maxAgeDays", 10)))
     hidden = {str(name).lower() for name in config.get("hideSources", [])}
-    previous = {s.get("title"): s for s in read_json(DATA / "news.json", {}).get("sections", [])}
+    last = last_published_news()
+    previous = {s.get("title"): s for s in last.get("sections", [])}
 
     sections = []
     for section in config.get("sections", []):
@@ -208,8 +228,11 @@ def refresh_news() -> None:
                 failed = True
                 print(f"news: {title}: {feed.get('url', '?')[:60]} failed ({describe(err)})")
         items = [item for group in groups for item in group]
+        updated = now
         if not items and failed and title in previous:
-            items = previous[title].get("items", [])  # outage: keep what we had
+            # Outage: keep what we had, along with when it was fetched, so the site stays honest.
+            items = previous[title].get("items", [])
+            updated = previous[title].get("updated") or last.get("updated")
         elif section.get("mixSources"):
             # Feeds take turns (newest first within each), so no single outlet fills the column.
             rounds = zip_longest(*(sorted(g, key=lambda i: i["published"] or "", reverse=True) for g in groups))
@@ -223,9 +246,10 @@ def refresh_news() -> None:
             if key not in seen:
                 seen.add(key)
                 unique.append(item)
-        sections.append({"title": title, "note": section.get("note", ""), "items": unique[:per_section]})
-        print(f"news: {title}: {len(unique[:per_section])} headlines")
-    write_json(DATA / "news.json", {"updated": iso(datetime.now(timezone.utc)), "sections": sections})
+        sections.append({"title": title, "note": section.get("note", ""), "updated": updated, "items": unique[:per_section]})
+        kept = "" if updated == now else " (kept from the last good run)"
+        print(f"news: {title}: {len(unique[:per_section])} headlines{kept}")
+    write_json(DATA / "news.json", {"updated": now, "sections": sections})
 
 
 if __name__ == "__main__":

@@ -2,6 +2,16 @@
   "itemsPerSection": 5,
   "maxAgeDays": 10,
   "hideSources": ["MMOEXP", "MMOWTS", "IGGM", "U4GM", "MMOGAH", "Eldorado.gg", "PlayerAuctions", "Z2U"],
+  "liveTicker": [
+    { "symbol": "FOREXCOM:SPXUSD", "label": "S&P 500" },
+    { "symbol": "FOREXCOM:NSXUSD", "label": "Nasdaq 100" },
+    { "symbol": "FOREXCOM:DJI", "label": "Dow 30" },
+    { "symbol": "CAPITALCOM:RTY", "label": "Russell 2000" },
+    { "symbol": "CAPITALCOM:VIX", "label": "VIX" },
+    { "symbol": "TVC:USOIL", "label": "Crude Oil" },
+    { "symbol": "OANDA:XAUUSD", "label": "Gold" },
+    { "symbol": "BITSTAMP:BTCUSD", "label": "Bitcoin" }
+  ],
   "sections": [
     {
       "title": "WoW: Forever",

@@ -19,6 +19,12 @@ import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 
+try:
+    from zoneinfo import ZoneInfo
+    PACIFIC = ZoneInfo("America/Los_Angeles")
+except Exception:  # Windows without the tzdata package: show UTC instead
+    PACIFIC = None
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 SRC = ROOT / "src"
@@ -97,6 +103,17 @@ def long_date(value: str) -> str:
     return f"{d:%B} {d.day}, {d.year}"
 
 
+def updated_at(value) -> str:
+    """When data was fetched: Pacific time in the HTML, turned into "12 minutes ago" by site.js."""
+    try:
+        moment = datetime.fromisoformat(text(value).replace("Z", "+00:00"))
+    except ValueError:
+        return ""
+    local, zone = (moment.astimezone(PACIFIC), "PT") if PACIFIC else (moment.astimezone(timezone.utc), "UTC")
+    clock = f"{local:%I:%M %p}".lstrip("0")
+    return f'<time datetime="{esc(moment.isoformat())}" data-ago>{local:%b} {local.day}, {clock} {zone}</time>'
+
+
 def ext(url: str, label: str, cls: str = "") -> str:
     attr = f' class="{cls}"' if cls else ""
     return f'<a{attr} href="{esc(url)}" target="_blank" rel="noopener">{label}</a>'
@@ -163,7 +180,14 @@ def read_site() -> dict:
     s["graveyard"] = [checked_entry(c, "graveyard") for c in roster.get("graveyard") or []]
 
     s["videos"] = [v for v in load("videos.json", required=False).get("videos") or [] if v.get("id")]
-    s["news"] = [sec for sec in load("news.json", required=False).get("sections") or [] if sec.get("items")]
+    news = load("news.json", required=False)
+    s["news"] = [sec for sec in news.get("sections") or [] if sec.get("items")]
+    s["news_updated"] = text(news.get("updated"))
+    s["ticker"] = [
+        {"proName": text(t.get("symbol")), "title": text(t.get("label"))}
+        for t in load("feeds.json", required=False).get("liveTicker") or []
+        if isinstance(t, dict) and text(t.get("symbol"))
+    ]
 
     s["logo"] = find_image("logo")
     s["portrait"] = find_image("portrait")
@@ -187,7 +211,10 @@ def page(s: dict, *, title: str, description: str, path: str, prefix: str, curre
     canonical = s["url"] + path
     og_image = ""
     if s["social_image"]:
-        og_image = f'<meta property="og:image" content="{esc(s["url"] + "/" + s["social_image"])}">'
+        og_image = (
+            f'<meta property="og:image" content="{esc(s["url"] + "/" + s["social_image"])}">\n'
+            '<meta name="twitter:card" content="summary_large_image">'
+        )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -261,7 +288,7 @@ def footer(s: dict) -> str:
     return f"""<footer class="footer">
 <div class="wrap">
 <ul class="platforms">{"".join(f"<li>{p}</li>" for p in platforms)}</ul>
-<p class="fine">Not financial advice. Talk about stocks and markets on stream is commentary only.</p>
+<p class="fine">Not financial advice. Market talk on stream is conversation and opinion, so do your own research before you trade.</p>
 <p class="fine">World of Warcraft is a trademark of Blizzard Entertainment, Inc. This is an independent fan site, not affiliated with or endorsed by Blizzard Entertainment.</p>
 <p class="fine">&copy; {year} {esc(s["name"])}</p>
 </div>
@@ -313,7 +340,7 @@ def hero(s: dict) -> str:
 <div class="player-wrap">
 <div class="player" id="player">
 <a class="facade" href="{esc(live_url)}" target="_blank" rel="noopener" data-embed="{esc(embed)}" data-title="{esc(s["name"])} live stream">
-{poster}<span class="play" aria-hidden="true">{PLAY_ICON}</span><span class="facade-label">Play the stream here</span>
+{poster}<span class="play" aria-hidden="true">{PLAY_ICON}</span><span class="facade-label">Watch live, right here</span>
 </a>
 </div>
 <p class="player-alt">{" ".join(alt_links)}</p>
@@ -380,9 +407,11 @@ def videos_section(s: dict) -> str:
 <span class="play" aria-hidden="true">{PLAY_ICON}</span><span class="facade-label">Play the latest uploads</span>
 </a>
 </div>"""
+    # The uploads player is YouTube's own and always current, so the timing note only goes with the list.
+    timing = "<p>New uploads show up here within about half an hour.</p>" if s["videos"] else ""
     return f"""<section class="section" id="videos" aria-labelledby="videos-title">
 <div class="wrap">
-<div class="section-head"><h2 id="videos-title">Latest Videos</h2>{all_videos}</div>
+<div class="section-head"><h2 id="videos-title">Latest Videos</h2>{all_videos}{timing}</div>
 {content}
 </div>
 </section>"""
@@ -404,12 +433,23 @@ def news_section(s: dict) -> str:
                 f'<span class="news-meta">{meta_html}</span></li>'
             )
         note = f'<p class="news-note">{esc(sec["note"])}</p>' if sec.get("note") else ""
-        cols.append(f'<div class="news-col panel"><h3>{esc(sec["title"])}</h3><ol>{"".join(items)}</ol>{note}</div>')
+        stamp = updated_at(sec.get("updated") or s["news_updated"])
+        updated = f'<p class="news-updated">Updated {stamp}</p>' if stamp else ""
+        cols.append(f'<div class="news-col panel"><h3>{esc(sec["title"])}</h3><ol>{"".join(items)}</ol>{note}{updated}</div>')
+    ticker = ""
+    if s["ticker"]:
+        # TradingView's free ticker embed; site.js loads it only once it scrolls into view.
+        config = {"symbols": s["ticker"], "showSymbolLogo": True, "isTransparent": True, "displayMode": "adaptive", "locale": "en"}
+        ticker = f"""<div class="ticker" data-needs-js hidden>
+<div class="ticker-host tradingview-widget-container" data-ticker="{esc(json.dumps(config))}"></div>
+<p class="fine ticker-note">Prices in this strip are live from {ext("https://www.tradingview.com/", "TradingView")}. A few quotes can run a couple of minutes behind.</p>
+</div>"""
     return f"""<section class="section" id="news" aria-labelledby="news-title">
 <div class="wrap">
-<div class="section-head"><h2 id="news-title">Town Crier</h2><p>Headlines from around the realm and beyond, refreshed every hour.</p></div>
+<div class="section-head"><h2 id="news-title">Town Crier</h2><p>What's going on in WoW: Forever, around the world, and in the markets. Headlines refresh about every 15 minutes, and each column shows when it last updated.</p></div>
+{ticker}
 <div class="news-grid">{"".join(cols)}</div>
-<p class="fine">Headlines link to their original publishers.</p>
+<p class="fine">Each headline opens the original story on the publisher's site.</p>
 </div>
 </section>"""
 
@@ -457,7 +497,7 @@ def contact_section(s: dict) -> str:
     return f"""<section class="section" id="contact" aria-labelledby="contact-title" data-needs-js hidden>
 <div class="wrap narrow center panel">
 <h2 id="contact-title">Contact</h2>
-<p>Business inquiries, collaborations, or just to say hello.</p>
+<p>Got a business question or a collab idea, or just want to say hi? Send an email.</p>
 <a class="btn btn-gold btn-email" data-e="{s["email_code"]}" data-show-address>Email</a>
 </div>
 </section>"""
@@ -503,7 +543,7 @@ def characters_page(s: dict) -> str:
             )
         parts.append(f"""<section class="section graveyard{' first' if not s['characters'] else ''}" id="graveyard" aria-labelledby="graveyard-title">
 <div class="wrap">
-<div class="section-head"><h2 id="graveyard-title">Graveyard</h2><p>In memory of the Hardcore heroes who fell along the way.</p></div>
+<div class="section-head"><h2 id="graveyard-title">Graveyard</h2><p>For the Hardcore characters who didn't make it.</p></div>
 <ul class="tomb-grid">{"".join(stones)}</ul>
 </div>
 </section>""")
@@ -521,7 +561,7 @@ def games_page(s: dict) -> str:
     if text(featured.get("title")):
         plans = "".join(f"<li>{esc(p)}</li>" for p in featured.get("plans") or [] if text(p))
         feature_html = f"""<article class="game-feature panel">
-<p class="badge">Main game</p>
+<p class="badge">Playing now</p>
 <h2>{esc(featured["title"])}</h2>
 {f'<p class="game-date">{esc(featured["released"])}</p>' if text(featured.get("released")) else ""}
 {f'<ul class="plan-list">{plans}</ul>' if plans else ""}
@@ -556,7 +596,7 @@ def games_page(s: dict) -> str:
 def not_found_page(s: dict) -> str:
     body = """<div class="page-head"><div class="wrap narrow center">
 <h1>Lost in the Wilds</h1>
-<p class="lede">This page does not exist. The road home is this way.</p>
+<p class="lede">There's nothing at this address. The road back to town is right here.</p>
 <p><a class="btn btn-gold" href="/">Back to the home page</a></p>
 </div></div>"""
     return page(s, title=f'Page not found | {s["name"]}', description="Page not found.",
@@ -580,6 +620,9 @@ def build() -> None:
         target = OUT / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content, encoding="utf-8")
+    if (DATA / "news.json").exists():
+        # Published so the next refresh can fall back to these headlines if every source is down.
+        shutil.copy2(DATA / "news.json", OUT / "news.json")
 
     urls = ["/", "/games/"] + (["/characters/"] if s["has_roster"] else [])
     (OUT / "sitemap.xml").write_text(

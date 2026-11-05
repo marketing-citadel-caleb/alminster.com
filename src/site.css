@@ -172,6 +172,14 @@ ul,ol{margin:0;padding:0;list-style:none}
 .news-col a:hover{color:var(--link);text-decoration:underline}
 .news-meta{display:block;margin-top:.25rem;font-size:.85rem;color:var(--muted)}
 .news-note{margin:.5rem 0 0;font-size:.85rem;font-style:italic;color:var(--muted)}
+.news-updated{margin:.6rem 0 0;padding-top:.6rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+.ticker{margin:0 0 1.25rem}
+/* color-scheme:normal keeps the embed see-through in dark mode; the heights match the
+   widget's two layouts so nothing jumps when it loads */
+.ticker-host{color-scheme:normal;min-height:86px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.ticker-host iframe{display:block}
+.ticker-note{margin:.45rem 0 0}
+@media (min-width:56rem){.ticker-host{min-height:60px}}
 @media (max-width:55.99rem){.news-col li:nth-child(n+4){display:none}}
 @media (min-width:56rem){.news-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 

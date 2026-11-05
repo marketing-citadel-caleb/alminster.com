@@ -1,15 +1,42 @@
-/* alminster.com: theme toggle, email reveal, click-to-play players. */
+/* alminster.com: theme toggle, email reveal, click-to-play players, live ticker. */
 (function () {
   "use strict";
   var root = document.documentElement;
 
+  function mode() {
+    return root.dataset.theme ||
+      (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  }
+
+  // Live market ticker (TradingView). Loads only once it scrolls near the
+  // screen, so it never slows down the first view of the page.
+  var ticker = document.querySelector("[data-ticker]");
+  var tickerLoaded = false;
+  function loadTicker() {
+    var config = JSON.parse(ticker.dataset.ticker);
+    config.colorTheme = mode();
+    var widget = document.createElement("div");
+    widget.className = "tradingview-widget-container__widget";
+    var script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+    script.async = true;
+    script.textContent = JSON.stringify(config);
+    ticker.replaceChildren(widget, script);
+    tickerLoaded = true;
+  }
+  if (ticker && "IntersectionObserver" in window) {
+    var watcher = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        watcher.disconnect();
+        loadTicker();
+      }
+    }, { rootMargin: "400px 0px" });
+    watcher.observe(ticker);
+  }
+
   // Theme: follows the device setting until someone picks one.
   var toggle = document.querySelector(".theme-toggle");
   if (toggle) {
-    var mode = function () {
-      return root.dataset.theme ||
-        (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-    };
     var sync = function () {
       var m = mode();
       toggle.dataset.mode = m;
@@ -20,6 +47,7 @@
       root.dataset.theme = next;
       try { localStorage.setItem("theme", next); } catch (e) { /* private mode */ }
       sync();
+      if (tickerLoaded) loadTicker(); // redraw in the new colors
     });
     sync();
     toggle.hidden = false;
@@ -32,6 +60,28 @@
     if (el.hasAttribute("data-show-address")) el.textContent = address;
   });
   document.querySelectorAll("[data-needs-js]").forEach(function (el) { el.hidden = false; });
+
+  // "Updated" stamps: show how long ago, which stays true however long the page has been open.
+  function ago(then) {
+    var minutes = Math.round((Date.now() - then) / 60000);
+    if (minutes < 2) return "just now";
+    if (minutes < 60) return minutes + " minutes ago";
+    var hours = Math.round(minutes / 60);
+    if (hours < 24) return hours === 1 ? "about an hour ago" : hours + " hours ago";
+    return null; // over a day old: keep the printed date
+  }
+  function refreshStamps() {
+    document.querySelectorAll("time[data-ago]").forEach(function (el) {
+      var then = Date.parse(el.dateTime);
+      var label = isNaN(then) ? null : ago(then);
+      if (label) {
+        if (!el.title) el.title = el.textContent;
+        el.textContent = label;
+      }
+    });
+  }
+  refreshStamps();
+  setInterval(refreshStamps, 60000);
 
   // Players load only when tapped, which keeps the page fast.
   function play(host, src, title) {

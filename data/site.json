@@ -1,7 +1,7 @@
 {
   "name": "Alminster of Azeroth",
   "url": "https://alminster.com",
-  "tagline": "Stay current on WoW: Forever, the news, and the markets.",
+  "tagline": "WoW: Forever, the morning's news, and a bit of market talk. Pull up a chair.",
   "schedule": "Usually live early mornings (Pacific Time).",
   "email": "alminster@alminster.com",
 
@@ -11,28 +11,28 @@
   "kofi": "",
   "patreon": "",
 
-  "supportLine": "Every bit of support helps keep the stream going, morning after morning.",
+  "supportLine": "Never expected, always appreciated. If you enjoy the mornings here, this is where to chip in.",
 
   "about": [
-    "Alminster has played World of Warcraft since the original launch in 2004, from Classic to Hardcore to PvP.",
-    "In World of Warcraft: Forever, the plan is an Alliance main on the PvP ruleset, with a Horde character on the RP ruleset later.",
-    "While he plays, he talks stocks and current events as side commentary. Options trading is a personal interest.",
-    "Streams usually start early in the morning, Pacific Time, and often run for hours. There is no fixed schedule."
+    "Alminster has been playing World of Warcraft since it launched in 2004. That's more than 22 years in Azeroth, including Classic, Hardcore and PvP.",
+    "Now he's starting over in World of Warcraft: Forever, with an Alliance main on the PvP ruleset and a Horde character on the RP ruleset coming later.",
+    "Expect some talk about stocks and the day's news while he plays. Options trading is a personal interest of his.",
+    "Streams usually start early in the morning, Pacific Time, and often run for hours. There's no fixed schedule, because streaming should never feel like a job."
   ],
   "aboutNote": "Not financial advice.",
 
   "games": {
-    "intro": "More than two decades in Azeroth, and the road keeps going.",
+    "intro": "Twenty-two years in Azeroth and counting.",
     "featured": {
       "title": "World of Warcraft: Forever",
-      "released": "Released November 4, 2026",
+      "released": "Launched November 4, 2026",
       "plans": [
         "Alliance main on the PvP ruleset",
-        "Horde character on the RP ruleset, later"
+        "Horde character on the RP ruleset, coming later"
       ]
     },
     "past": [
-      { "title": "World of Warcraft Classic", "note": "The original world, recreated." },
+      { "title": "World of Warcraft Classic", "note": "The original game, the way it was." },
       { "title": "Hardcore", "note": "One life per character. No second chances." }
     ]
   }

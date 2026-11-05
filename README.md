@@ -3,7 +3,7 @@
 The streaming hub for **Alminster of Azeroth**. Free hosting on GitHub Pages, no routine upkeep.
 
 - **Changes you make** live in a few small files (`data/` and `images/`). Edit one, commit, and the site rebuilds itself in about two minutes.
-- **Changes that happen on their own:** latest videos and the Town Crier headlines refresh every hour through a GitHub Action.
+- **Changes that happen on their own:** latest videos and the Town Crier headlines refresh about every 15 minutes through a GitHub Action, and the market ticker is live.
 - **Anything without data stays hidden.** Leave a link empty and its button, section or menu item simply is not there.
 - **A typo can't break the live site.** If a data file has a mistake, the build stops and the site stays on its last good version. The error message says which line to fix.
 
@@ -90,7 +90,7 @@ Upload a file into the `images/` folder with one of these exact names (on github
 | `logo.png` (or .svg, .webp) | Replaces the text wordmark on the home page and in the header |
 | `portrait.jpg` | The About section (otherwise a crest emblem) |
 | `stream.jpg` | Background of the "Play the stream here" panel |
-| `social.png` | Preview image when the site is shared (1200 x 630) |
+| `social.png` | Preview image when the site is shared (1200 x 630). A crest-and-wordmark version is already in place; upload a new one with the same name to replace it. |
 | `characters/brightwind.jpg` | That character's card (character name in lowercase) |
 
 Keep images under about 300 KB so the site stays fast. To remove one, delete the file.
@@ -105,13 +105,21 @@ Keep images under about 300 KB so the site stays fast. To remove one, delete the
 
 World and Markets draw on outlets known for straight, non-partisan reporting (Reuters, BBC News, DW and AP), with `"mixSources": true` so the outlets take turns and no single one fills a column. Without it, a column that has several feeds simply shows the newest headlines first.
 
+### Change the market ticker
+
+The strip of live prices above the headlines is TradingView's free ticker. Its symbols are the `liveTicker` list in `data/feeds.json`: each entry is a TradingView symbol and the label to show, for example `{ "symbol": "OANDA:XAUUSD", "label": "Gold" }`. Find symbols on tradingview.com. Some (such as US Treasury yields) are not available in free widgets and show up blank, so check the site after adding one. Empty the list (`"liveTicker": []`) to remove the strip.
+
 ## What runs automatically
 
-**Hourly refresh** (`.github/workflows/site.yml`). Every hour it fetches Damian's latest YouTube uploads and the headlines, rebuilds the site and publishes it. It also runs whenever a file is committed, and you can run it by hand from **Actions > Build and deploy > Run workflow**.
+**Refresh every 15 minutes** (`.github/workflows/site.yml`). It fetches Damian's latest YouTube uploads and the headlines, rebuilds the site and publishes it. It also runs whenever a file is committed, and you can run it by hand from **Actions > Build and deploy > Run workflow**.
+
+- **How fresh things are, as the site tells visitors:** the live player and the market ticker are live; new videos show up within about half an hour; each headline column shows when it last updated ("Updated 12 minutes ago").
+- **GitHub's timing is best-effort.** Scheduled runs can start late or occasionally be skipped, especially when GitHub is busy. The "Updated" stamps always show the true age, so a late run never misleads anyone.
+- **If every headline source is down,** the site keeps the last good headlines (with their original "Updated" time) instead of going blank.
 
 - **YouTube's RSS feed has outages.** It was returning errors for every channel on launch day. When it fails, the last saved video list stays up. Until the first successful fetch, Latest Videos shows YouTube's own "latest uploads" player, which is always current.
 - **Optional backup source:** add a YouTube Data API key and the refresh uses it whenever RSS is down. In Google Cloud Console, create a project, enable **YouTube Data API v3**, create an API key and restrict it to that API. Then in GitHub go to **Settings > Secrets and variables > Actions > New repository secret**, name it `YOUTUBE_API_KEY` and paste the key. The key is used only inside the Action and never reaches the website.
-- **Staying switched on:** GitHub pauses hourly jobs in repositories with no commits for 60 days. The workflow makes a one-line commit (`.github/keepalive`) whenever the repository has been quiet for 45 days, so this never happens.
+- **Staying switched on:** GitHub pauses scheduled jobs in repositories with no commits for 60 days. The workflow makes a one-line commit (`.github/keepalive`) whenever the repository has been quiet for 45 days, so this never happens.
 
 **Blizzard character sync** (`.github/workflows/character-sync.yml`) is included but switched off, because Blizzard has not yet published the profile API for WoW: Forever. The site does not depend on it. To switch it on later:
 
@@ -127,7 +135,9 @@ It fills in level, race, class and faction. Name, ruleset, status and featured a
 
 DNS for alminster.com is managed at Squarespace Domains. **Email runs on Google Workspace and its records must stay exactly as they are.**
 
-Remove (Squarespace's default website records, which show the current "Coming Soon" page):
+**Status:** done on November 5, 2026. The records below are kept for reference, for example if the domain ever moves.
+
+Removed (Squarespace's default website records, which showed the old "Coming Soon" page):
 
 | Type | Host | Value |
 | --- | --- | --- |
@@ -138,7 +148,7 @@ Remove (Squarespace's default website records, which show the current "Coming So
 | HTTPS | @ | `1 . alpn=h2,http/1.1 ipv4hint=...` |
 | CNAME | www | ext-sq.squarespace.com |
 
-Add:
+Added:
 
 | Type | Host | Value |
 | --- | --- | --- |
@@ -182,7 +192,7 @@ python -m http.server 8000 -d _site
 | --- | --- |
 | `data/site.json` | Name, links, wording |
 | `data/characters.json` | Roster and Graveyard |
-| `data/feeds.json` | Headline sources |
+| `data/feeds.json` | Headline sources and market ticker symbols |
 | `data/videos.json` | Latest videos (written by the hourly Action) |
 | `images/` | Logo and photos, picked up by file name |
 | `src/site.css`, `src/assets/` | Styles, script, font (Cinzel, SIL Open Font License), emblem |

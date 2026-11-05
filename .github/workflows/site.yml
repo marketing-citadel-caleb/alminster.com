@@ -1,12 +1,13 @@
 name: Build and deploy
 
-# Runs on every push to main, every hour (to pick up new videos and
-# headlines), and on demand from the Actions tab.
+# Runs on every push to main, about every 15 minutes (to pick up new
+# videos and headlines), and on demand from the Actions tab. The odd
+# minutes avoid the top of the hour, when GitHub delays scheduled runs most.
 on:
   push:
     branches: [main]
   schedule:
-    - cron: "17 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 
 concurrency:
@@ -36,7 +37,7 @@ jobs:
           if [ "$idle_days" -ge 45 ]; then
             date -u +%Y-%m-%d > .github/keepalive
             git add .github/keepalive
-            message="Keep the hourly refresh active"
+            message="Keep the scheduled refresh active"
           fi
           git add data/videos.json
           if ! git diff --cached --quiet; then
