@@ -1,0 +1,27 @@
+{
+  "itemsPerSection": 5,
+  "maxAgeDays": 10,
+  "hideSources": ["MMOEXP", "MMOWTS", "IGGM", "U4GM", "MMOGAH", "Eldorado.gg", "PlayerAuctions", "Z2U"],
+  "sections": [
+    {
+      "title": "WoW: Forever",
+      "feeds": [
+        { "url": "https://news.google.com/rss/search?q=%22World+of+Warcraft%22+Forever&hl=en-US&gl=US&ceid=US:en" },
+        { "url": "https://www.wowhead.com/news/rss/all", "source": "Wowhead", "titleMustInclude": "forever" }
+      ]
+    },
+    {
+      "title": "News",
+      "feeds": [
+        { "url": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en" }
+      ]
+    },
+    {
+      "title": "Markets",
+      "note": "Not financial advice.",
+      "feeds": [
+        { "url": "https://news.google.com/rss/search?q=%22stock+market%22+OR+%22stocks%22+when:2d&hl=en-US&gl=US&ceid=US:en" }
+      ]
+    }
+  ]
+}

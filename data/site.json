@@ -1,0 +1,39 @@
+{
+  "name": "Alminster of Azeroth",
+  "url": "https://alminster.com",
+  "tagline": "Stay current on WoW: Forever, the news, and the markets.",
+  "schedule": "Usually live early mornings (Pacific Time).",
+  "email": "alminster@alminster.com",
+
+  "youtube": "https://www.youtube.com/@alminster_of_azeroth",
+  "youtubeChannelId": "UCreUk1PSo6vahTNuJaneQBA",
+  "twitch": "",
+  "kofi": "",
+  "patreon": "",
+
+  "supportLine": "Every bit of support helps keep the stream going, morning after morning.",
+
+  "about": [
+    "Alminster has played World of Warcraft since the original launch in 2004, from Classic to Hardcore to PvP.",
+    "In World of Warcraft: Forever, the plan is an Alliance main on the PvP ruleset, with a Horde character on the RP ruleset later.",
+    "While he plays, he talks stocks and current events as side commentary. Options trading is a personal interest.",
+    "Streams usually start early in the morning, Pacific Time, and often run for hours. There is no fixed schedule."
+  ],
+  "aboutNote": "Not financial advice.",
+
+  "games": {
+    "intro": "More than two decades in Azeroth, and the road keeps going.",
+    "featured": {
+      "title": "World of Warcraft: Forever",
+      "released": "Released November 4, 2026",
+      "plans": [
+        "Alliance main on the PvP ruleset",
+        "Horde character on the RP ruleset, later"
+      ]
+    },
+    "past": [
+      { "title": "World of Warcraft Classic", "note": "The original world, recreated." },
+      { "title": "Hardcore", "note": "One life per character. No second chances." }
+    ]
+  }
+}

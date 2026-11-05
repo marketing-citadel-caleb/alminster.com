@@ -1,0 +1,68 @@
+name: Build and deploy
+
+# Runs on every push to main, every hour (to pick up new videos and
+# headlines), and on demand from the Actions tab.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Refresh videos and headlines
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python3 scripts/fetch_feeds.py
+
+      - name: Save new videos and keep the schedule alive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          message="Refresh latest videos"
+          # GitHub pauses scheduled workflows after 60 days without a commit.
+          idle_days=$(( ($(date +%s) - $(git log -1 --format=%ct)) / 86400 ))
+          if [ "$idle_days" -ge 45 ]; then
+            date -u +%Y-%m-%d > .github/keepalive
+            git add .github/keepalive
+            message="Keep the hourly refresh active"
+          fi
+          git add data/videos.json
+          if ! git diff --cached --quiet; then
+            git commit -m "$message"
+            git pull --rebase --quiet
+            git push
+          fi
+
+      - name: Build site
+        run: python3 scripts/build.py
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
