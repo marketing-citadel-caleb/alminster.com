@@ -20,6 +20,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
+from itertools import zip_longest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -199,16 +200,21 @@ def refresh_news() -> None:
     for section in config.get("sections", []):
         title = str(section.get("title", "")).strip()
         feeds = section.get("feeds", [])
-        items, failed = [], False
+        groups, failed = [], False
         for feed in feeds:
             try:
-                items += items_from_feed(feed, cutoff, hidden)
+                groups.append(items_from_feed(feed, cutoff, hidden))
             except Exception as err:  # one bad feed never stops the rest
                 failed = True
                 print(f"news: {title}: {feed.get('url', '?')[:60]} failed ({describe(err)})")
+        items = [item for group in groups for item in group]
         if not items and failed and title in previous:
             items = previous[title].get("items", [])  # outage: keep what we had
-        if len(feeds) > 1:
+        elif section.get("mixSources"):
+            # Feeds take turns (newest first within each), so no single outlet fills the column.
+            rounds = zip_longest(*(sorted(g, key=lambda i: i["published"] or "", reverse=True) for g in groups))
+            items = [item for row in rounds for item in row if item]
+        elif len(feeds) > 1:
             # Merge several feeds newest first; a single feed keeps its own (editorial) order.
             items.sort(key=lambda i: i["published"] or "", reverse=True)
         seen, unique = set(), []

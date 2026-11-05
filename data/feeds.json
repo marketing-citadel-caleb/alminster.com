@@ -11,16 +11,22 @@
       ]
     },
     {
-      "title": "News",
+      "title": "World",
+      "mixSources": true,
       "feeds": [
-        { "url": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en" }
+        { "url": "https://news.google.com/rss/search?q=site:reuters.com/world+-site:reuters.com/world/us+when:1d&hl=en-US&gl=US&ceid=US:en" },
+        { "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "source": "BBC News" },
+        { "url": "https://rss.dw.com/xml/rss-en-world", "source": "DW" }
       ]
     },
     {
       "title": "Markets",
       "note": "Not financial advice.",
+      "mixSources": true,
       "feeds": [
-        { "url": "https://news.google.com/rss/search?q=%22stock+market%22+OR+%22stocks%22+when:2d&hl=en-US&gl=US&ceid=US:en" }
+        { "url": "https://news.google.com/rss/search?q=site:reuters.com/business+when:1d&hl=en-US&gl=US&ceid=US:en", "titleMustInclude": ["stock", "wall street", "dow ", "s&p", "nasdaq", "market", "shares", "earnings", "investor", "interest rate", "oil price", "dollar", "treasur", "bond", "inflation"] },
+        { "url": "https://news.google.com/rss/search?q=stocks+OR+%22wall+street%22+site:apnews.com+when:2d&hl=en-US&gl=US&ceid=US:en", "titleMustInclude": ["stock", "wall street", "dow ", "s&p", "nasdaq", "market", "shares", "earnings", "investor", "interest rate", "oil price", "dollar", "treasur", "bond", "inflation"] },
+        { "url": "https://feeds.bbci.co.uk/news/business/rss.xml", "source": "BBC News", "titleMustInclude": ["stock", "wall street", "dow ", "s&p", "nasdaq", "market", "shares", "earnings", "investor", "interest rate", "oil price", "dollar", "treasur", "bond", "inflation"] }
       ]
     }
   ]

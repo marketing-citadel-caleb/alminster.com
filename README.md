@@ -101,7 +101,9 @@ Keep images under about 300 KB so the site stays fast. To remove one, delete the
 
 ### Change the headline sources
 
-`data/feeds.json` lists the feeds behind the three Town Crier columns (WoW: Forever, News, Markets). Any RSS feed URL works. Add a publisher's name to `hideSources` to keep it out (useful for gold-selling spam sites that show up in search results).
+`data/feeds.json` lists the feeds behind the three Town Crier columns (WoW: Forever, World, Markets). Any RSS feed URL works. Add a publisher's name to `hideSources` to keep it out (useful for gold-selling spam sites that show up in search results).
+
+World and Markets draw on outlets known for straight, non-partisan reporting (Reuters, BBC News, DW and AP), with `"mixSources": true` so the outlets take turns and no single one fills a column. Without it, a column that has several feeds simply shows the newest headlines first.
 
 ## What runs automatically
 
