@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-06T08:35:31+00:00",
+  "updated": "2026-11-06T16:15:35+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "gpNsCpkTUrY",
+      "title": "Alminster of Azeroth Morning Show Ep: 33 WoW News, Updates & Stocks. Druid Mage Warlock Forever",
+      "published": "2026-11-06T14:23:46+00:00"
+    },
     {
       "id": "c6N9Qk539BE",
       "title": "Alminster of Azeroth Morning Show Ep: 32 WoW News, Updates & Stocks. Druid Mage Warlock Forever",
@@ -56,11 +61,6 @@
       "id": "PQerEZXwjRY",
       "title": "Shaman World PvP. World of Warcraft Forever Waiting Room",
       "published": "2026-10-27T03:38:17+00:00"
-    },
-    {
-      "id": "QcMxwSXm4E4",
-      "title": "Last Day!!! Dwarf Shaman World PvP. World of Warcraft Forever Beta,",
-      "published": "2026-10-24T05:38:04+00:00"
     }
   ]
 }
