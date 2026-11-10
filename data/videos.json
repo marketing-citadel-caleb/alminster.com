@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-10T15:50:11+00:00",
+  "updated": "2026-11-10T21:31:31+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "hL2qSICgmxU",
+      "title": "Druid Leveling Duneons and so much more!!! World of Warcraft Forever WoW Forever",
+      "published": "2026-11-10T18:55:45+00:00"
+    },
     {
       "id": "Bi2KH0mTsYA",
       "title": "Druid Battlegrounds Warsong Alminster of Azeroth Morning Show Ep: 35 WoW News, Updates & Stocks",
@@ -56,11 +61,6 @@
       "id": "P0oIQyn_rkw",
       "title": "Alminster of Azeroth Morning Show Ep: 29 WoW News, News & Stocks. Mage Zul'Farrak Shaman",
       "published": "2026-11-03T05:32:21+00:00"
-    },
-    {
-      "id": "9x4UgKM0Gu0",
-      "title": "Alminster of Azeroth Morning Show Ep: 28 WoW News, News & Stocks",
-      "published": "2026-10-31T06:35:48+00:00"
     }
   ]
 }
