@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-12T11:55:36+00:00",
+  "updated": "2026-11-12T19:50:54+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "Jy1XrXMK4TY",
+      "title": "Druid Water form Quest WoW Forever Alminster of Azeroth Morning Show Ep: 37",
+      "published": "2026-11-12T14:27:32+00:00"
+    },
     {
       "id": "Dpp20FVsY_o",
       "title": "Dwarf Shaman Leveling Alminster of Azeroth Morning Show Ep: 36 WoW News, Updates & Stocks",
@@ -56,11 +61,6 @@
       "id": "XGqipIFIA3g",
       "title": "Alminster of Azeroth Morning Show Ep: 31 WoW News, Updates & Stocks. Mage Warlock Warrior Paladin",
       "published": "2026-11-05T05:25:00+00:00"
-    },
-    {
-      "id": "aVg1l0GpgG8",
-      "title": "Alminster of Azeroth Morning Show Ep: 30 WoW Forever Current Updates News & Stocks Class Changes",
-      "published": "2026-11-04T04:37:45+00:00"
     }
   ]
 }
