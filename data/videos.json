@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-16T11:45:50+00:00",
+  "updated": "2026-11-16T21:16:18+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "agESOU6X2SQ",
+      "title": "Horde Torch Quest with Bonus WoW Forever Alminster of Azeroth Morning Show Ep: 39 News & Stocks",
+      "published": "2026-11-16T14:20:35+00:00"
+    },
     {
       "id": "zWWXhVQgT1E",
       "title": "Ruins of Lordaeron Tauren Druid WoW Forever Bear Tank RoL",
@@ -56,11 +61,6 @@
       "id": "gpNsCpkTUrY",
       "title": "Alminster of Azeroth Morning Show Ep: 33 WoW News, Updates & Stocks. Druid Mage Warlock Forever",
       "published": "2026-11-07T03:52:47+00:00"
-    },
-    {
-      "id": "c6N9Qk539BE",
-      "title": "Alminster of Azeroth Morning Show Ep: 32 WoW News, Updates & Stocks. Druid Mage Warlock Forever",
-      "published": "2026-11-06T03:37:33+00:00"
     }
   ]
 }
