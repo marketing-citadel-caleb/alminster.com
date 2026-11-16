@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-14T08:54:45+00:00",
+  "updated": "2026-11-16T11:45:50+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "zWWXhVQgT1E",
+      "title": "Ruins of Lordaeron Tauren Druid WoW Forever Bear Tank RoL",
+      "published": "2026-11-16T01:06:55+00:00"
+    },
     {
       "id": "EZhEAfCcZSw",
       "title": "Orc Mage Leveling Quest WoW Forever Alminster of Azeroth Morning Show Ep: 38 News & Stocks",
@@ -14,7 +19,7 @@
     },
     {
       "id": "BJTip_i-uGE",
-      "title": "New Druid Water Form Quest Horde Tauren WoW Forever",
+      "title": "New Druid Water Form Quest Horde Tauren WoW Forever with unintentional extras :)",
       "published": "2026-11-12T21:11:25+00:00"
     },
     {
@@ -56,11 +61,6 @@
       "id": "c6N9Qk539BE",
       "title": "Alminster of Azeroth Morning Show Ep: 32 WoW News, Updates & Stocks. Druid Mage Warlock Forever",
       "published": "2026-11-06T03:37:33+00:00"
-    },
-    {
-      "id": "B6s1QB14YD0",
-      "title": "Leveling Druid Mage Leatherworking Crafting World of Warcraft Forever WoW",
-      "published": "2026-11-05T23:19:27+00:00"
     }
   ]
 }
