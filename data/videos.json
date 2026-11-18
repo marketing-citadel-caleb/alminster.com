@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-17T21:49:15+00:00",
+  "updated": "2026-11-18T20:24:45+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "8f7Hx_8YBzI",
+      "title": "Dev Notes WoW Forever Alminster of Azeroth Morning Show Ep: 40 News & Stocks",
+      "published": "2026-11-18T14:22:24+00:00"
+    },
     {
       "id": "IBzO5kfUX4g",
       "title": "Horde Torch Quest plus extra's. Tips Tricks and Tech",
@@ -56,11 +61,6 @@
       "id": "Wlse7J5qLRg",
       "title": "Alminster of Azeroth Morning Show Ep: 34 WoW News, Updates & Stocks. Druid Tanking WoW Forever",
       "published": "2026-11-10T04:42:15+00:00"
-    },
-    {
-      "id": "m_0j61sFrYY",
-      "title": "Best way to level from Level 1 imo. Make sure your main or alts have the best start to WoW Forever",
-      "published": "2026-11-09T15:10:03+00:00"
     }
   ]
 }
