@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-19T19:03:50+00:00",
+  "updated": "2026-11-20T01:14:06+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "y2sL9zJXOK0",
+      "title": "WoW Forever Level 29 Battlegrounds Warsong Gulch Arathi Highlands Lvl 29",
+      "published": "2026-11-19T21:00:18+00:00"
+    },
     {
       "id": "mNj7fOSr6oY",
       "title": "Ruins of Lordaeron WoW Forever Alminster of Azeroth Morning Show Ep: 41 News & Stocks",
@@ -56,11 +61,6 @@
       "id": "Dpp20FVsY_o",
       "title": "Dwarf Shaman Leveling Alminster of Azeroth Morning Show Ep: 36 WoW News, Updates & Stocks",
       "published": "2026-11-12T05:41:56+00:00"
-    },
-    {
-      "id": "hL2qSICgmxU",
-      "title": "Druid Leveling Dungeons and so much more!!! World of Warcraft Forever WoW Forever",
-      "published": "2026-11-11T10:52:30+00:00"
     }
   ]
 }
