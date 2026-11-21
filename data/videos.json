@@ -1,7 +1,22 @@
 {
-  "updated": "2026-11-20T17:22:05+00:00",
+  "updated": "2026-11-21T19:45:05+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "aQzEu0E0uEs",
+      "title": "Alminster of Azeroth",
+      "published": "2026-11-21T18:14:59+00:00"
+    },
+    {
+      "id": "CRO1SNFC1yg",
+      "title": "Alminster of Azeroth Commercial",
+      "published": "2026-11-21T17:59:38+00:00"
+    },
+    {
+      "id": "UsayDI0oxjM",
+      "title": "Toyota Tacoma Video, My New Mount",
+      "published": "2026-11-21T17:48:38+00:00"
+    },
     {
       "id": "XjCQkuaZJ3I",
       "title": "Shadowfang Keep Druid WoW Forever SFK",
@@ -46,21 +61,6 @@
       "id": "agESOU6X2SQ",
       "title": "Horde Torch Quest with Bonus WoW Forever Alminster of Azeroth Morning Show Ep: 39 News & Stocks",
       "published": "2026-11-17T04:03:32+00:00"
-    },
-    {
-      "id": "zWWXhVQgT1E",
-      "title": "Ruins of Lordaeron Tauren Druid WoW Forever Bear Tank RoL Tips Tricks and Tech",
-      "published": "2026-11-16T01:06:55+00:00"
-    },
-    {
-      "id": "EZhEAfCcZSw",
-      "title": "Orc Mage Leveling Quest WoW Forever Alminster of Azeroth Morning Show Ep: 38 News & Stocks",
-      "published": "2026-11-14T03:36:13+00:00"
-    },
-    {
-      "id": "Jy1XrXMK4TY",
-      "title": "Druid Water form Quest WoW Forever Alminster of Azeroth Morning Show Ep: 37",
-      "published": "2026-11-13T05:11:25+00:00"
     }
   ]
 }
