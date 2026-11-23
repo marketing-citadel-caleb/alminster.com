@@ -1,7 +1,12 @@
 {
-  "updated": "2026-11-23T01:35:38+00:00",
+  "updated": "2026-11-23T21:44:14+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "nirtnuwfFsA",
+      "title": "Druid PvP Battlegrounds WoW Forever Alminster of Azeroth Morning Show Ep: 42 Dev Nots & Updates",
+      "published": "2026-11-23T15:32:27+00:00"
+    },
     {
       "id": "aQzEu0E0uEs",
       "title": "Alminster of Azeroth",
@@ -56,11 +61,6 @@
       "id": "pNzimDPr-uY",
       "title": "Deadmines Druid DPS WoW Forever Tips Tricks and Tech",
       "published": "2026-11-17T11:33:06+00:00"
-    },
-    {
-      "id": "agESOU6X2SQ",
-      "title": "Horde Torch Quest with Bonus WoW Forever Alminster of Azeroth Morning Show Ep: 39 News & Stocks",
-      "published": "2026-11-17T04:03:32+00:00"
     }
   ]
 }
