@@ -1,11 +1,16 @@
 {
-  "updated": "2026-11-23T21:44:14+00:00",
+  "updated": "2026-11-24T16:31:38+00:00",
   "source": "rss",
   "videos": [
     {
+      "id": "e1HXLs8XxUU",
+      "title": "Rogue Leveling WoW Forever Alminster of Azeroth Morning Show Ep: 43 Dev Nots & Updates",
+      "published": "2026-11-24T14:17:40+00:00"
+    },
+    {
       "id": "nirtnuwfFsA",
       "title": "Druid PvP Battlegrounds WoW Forever Alminster of Azeroth Morning Show Ep: 42 Dev Nots & Updates",
-      "published": "2026-11-23T15:32:27+00:00"
+      "published": "2026-11-24T06:28:04+00:00"
     },
     {
       "id": "aQzEu0E0uEs",
@@ -56,11 +61,6 @@
       "id": "IBzO5kfUX4g",
       "title": "Horde Torch Quest plus extra's. Tips Tricks and Tech",
       "published": "2026-11-17T11:44:38+00:00"
-    },
-    {
-      "id": "pNzimDPr-uY",
-      "title": "Deadmines Druid DPS WoW Forever Tips Tricks and Tech",
-      "published": "2026-11-17T11:33:06+00:00"
     }
   ]
 }
