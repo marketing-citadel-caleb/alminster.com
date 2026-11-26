@@ -1,7 +1,17 @@
 {
-  "updated": "2026-11-25T09:45:55+00:00",
+  "updated": "2026-11-26T20:30:08+00:00",
   "source": "rss",
   "videos": [
+    {
+      "id": "_BsTLa_4Chs",
+      "title": "When you play Horde and Alliance",
+      "published": "2026-11-26T20:29:24+00:00"
+    },
+    {
+      "id": "RFvC9hEmFwg",
+      "title": "How I feel when the Turkey is served!!",
+      "published": "2026-11-26T20:26:14+00:00"
+    },
     {
       "id": "e1HXLs8XxUU",
       "title": "Rogue Leveling WoW Forever Alminster of Azeroth Morning Show Ep: 43 Dev Nots & Updates",
@@ -51,16 +61,6 @@
       "id": "4-cCSDbA6Hw",
       "title": "Feral Druid Free Play plus Tips & Tricks Along the Way",
       "published": "2026-11-19T04:53:18+00:00"
-    },
-    {
-      "id": "8f7Hx_8YBzI",
-      "title": "Dev Notes WoW Forever Alminster of Azeroth Morning Show Ep: 40 News & Stocks",
-      "published": "2026-11-19T03:28:50+00:00"
-    },
-    {
-      "id": "IBzO5kfUX4g",
-      "title": "Horde Torch Quest plus extra's. Tips Tricks and Tech",
-      "published": "2026-11-17T11:44:38+00:00"
     }
   ]
 }
